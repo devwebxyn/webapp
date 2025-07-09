@@ -1,0 +1,88 @@
+/* Styling untuk Logo Cloud yang Bergerak */
+.scroller {
+  -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
+  mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
+}
+
+.scroller-inner {
+  display: flex;
+  flex-wrap: nowrap; /* Mencegah item turun ke baris baru */
+  gap: 2rem; /* Jarak antar logo */
+}
+
+/* Terapkan animasi hanya jika ada atribut data-animated */
+.scroller[data-animated="true"] .scroller-inner {
+  width: max-content; /* Pastikan lebar kontainer sesuai isinya */
+  animation: scroll 40s linear infinite;
+}
+
+@keyframes scroll {
+  to {
+    transform: translate(-50%);
+  }
+}
+
+/* Kontainer untuk setiap logo + nama */
+.logo-item-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Jarak antara logo dan nama */
+  color: #a1a1aa; /* Warna teks nama perusahaan */
+  transition: color 0.3s ease;
+}
+
+.logo-item-container:hover {
+  color: #f5f5f5; /* Warna teks saat hover */
+}
+
+/* Hapus filter grayscale dari logo */
+.logo-item {
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+.logo-item:hover {
+  opacity: 1;
+}
+
+/* Styling untuk Label Flowchart 2D */
+.flow-label {
+  background-color: rgba(0, 255, 255, 0.1);
+  border: 1px solid rgba(0, 255, 255, 0.4);
+  color: #f5f5f5;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  width: 160px;
+  text-align: left;
+  /* Pindahkan label ke samping kanan node */
+  transform: translate(70px, -50%); 
+}
+/* Definisi Font Kustom */
+@font-face {
+    font-family: 'Monument Extended';
+    src: url('/fonts/MonumentExtended-Regular.otf') format('opentype'); /* Ganti dengan nama file Anda */
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/Satoshi-Regular.woff2') format('woff2'); /* Ganti dengan nama file Anda */
+    font-weight: normal;
+}
+
+/* Gaya Global & Latar Belakang */
+body {
+    background-color: #0A0A0A; /* Latar Belakang Arang Pekat */
+    color: #F5F5F5;            /* Teks Putih Pudar */
+    font-family: 'Satoshi', sans-serif; /* Font default untuk isi */
+    /* Tambahkan tekstur noise jika Anda memiliki gambar noise */
+    /* background-image: url('/noise.png'); */
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
