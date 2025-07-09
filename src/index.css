@@ -1,3 +1,15 @@
+/* Aturan CSS khusus untuk memastikan warna teks input terlihat */
+.chat-input {
+  color: #f5f5f5; /* Warna putih pudar untuk teks yang diketik */
+}
+
+.chat-input::placeholder {
+  color: #737373; /* Warna abu-abu untuk teks placeholder "Tanya apa saja..." */
+}
+
+
+
+
 /* Styling untuk Logo Cloud yang Bergerak */
 .scroller {
   -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
