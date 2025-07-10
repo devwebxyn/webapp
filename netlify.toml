@@ -1,13 +1,11 @@
-# File konfigurasi untuk Netlify
-
 [build]
-  # Perintah untuk membangun situs Anda
   command = "npm run build"
-  
-  # Folder yang berisi hasil build untuk di-deploy
   publish = "dist"
 
-# Aturan rewrite untuk Single Page Application (SPA) seperti React
+[functions]
+  # Diubah sesuai nama folder Anda
+  directory = "cloudnest-backend" 
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

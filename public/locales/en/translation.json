@@ -1,0 +1,33 @@
+{
+  "nav": {
+    "home": "Home",
+    "about_project": "About Project",
+    "about_developer": "About Developer",
+    "try_ai": "Try Our AI",
+    "login": "Sign In"
+  },
+  "hero": {
+    "title_part1": "Your Digital Space.",
+    "title_part2": "Powered by AI.",
+    "subtitle": "Secure all your files, photos, and social media archives in one place. Let our smart AI organize it for you.",
+    "cta_main": "Start for Free",
+    "cta_secondary": "Learn Features"
+  },
+  "features": {
+    "title": "All The Features You Need",
+    "subtitle": "Designed for security, speed, and ease of use.",
+    "storage_title": "Unified Storage",
+    "storage_desc": "One secure place for all your important files, documents, photos, and videos. Access from anywhere.",
+    "social_title": "Social Media Archive",
+    "social_desc": "Connect your accounts to automatically and permanently archive posts, photos, and digital memories.",
+    "ai_title": "AI Smart Organization",
+    "ai_desc": "Our AI automatically tags photos, summarizes documents, and creates intelligent collections.",
+    "security_title": "Privacy & Encryption",
+    "security_desc": "With end-to-end encryption and a zero-knowledge policy, your data belongs only to you."
+  },
+  "home_cta": {
+    "title": "Your Digital Life, Perfectly Organized.",
+    "subtitle": "Stop worrying about data loss. Start archiving your memories intelligently today.",
+    "button": "Secure Your Memories"
+  }
+}

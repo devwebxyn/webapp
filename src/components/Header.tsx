@@ -1,41 +1,35 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
-import { VscMenu, VscChromeClose } from 'react-icons/vsc';
 import { Link } from 'react-router-dom';
-import { AuthModal } from './AuthModal'; // <-- Impor AuthModal
+import { AuthModal } from './AuthModal';
+import { VscMenu, VscChromeClose } from 'react-icons/vsc';
 
-// Daftar link navigasi baru
+// Daftar link navigasi sekarang statis (tidak lagi menggunakan 't()')
 const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'Tentang Proyek', href: '/about-project' },
   { name: 'Tentang Developer', href: '/about-developer' },
-  { name: 'Coba AI Kami', href: '/try-ai' }, // Ganti '#' dengan link yang sesuai
+  { name: 'Coba AI Kami', href: '/try-ai' },
 ];
 
 const menuVariants: Variants = {
-  hidden: { opacity: 0, y: -20, transition: { duration: 0.2, ease: 'easeOut' } },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.2, ease: 'easeIn' } },
+  hidden: { opacity: 0, height: 0, transition: { duration: 0.2, ease: 'easeOut' } },
+  visible: { opacity: 1, height: 'auto', transition: { duration: 0.2, ease: 'easeIn' } },
 };
 
 export const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false); // State untuk modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
-      <motion.header
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5, ease: 'easeOut' }}
-        className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-xl"
-      >
+      <header className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between p-4 md:px-8">
           <Link to="/" className="font-monument text-2xl font-bold text-neutral">
             CloudNest
           </Link>
-
-          <div className="hidden items-center gap-8 md:flex">
-            {/* Navigasi Desktop */}
+          
+          <div className="hidden items-center gap-4 md:flex">
             <nav>
               <ul className="flex items-center space-x-8">
                 {navLinks.map((link) => (
@@ -47,34 +41,31 @@ export const Header: React.FC = () => {
                 ))}
               </ul>
             </nav>
-
-            {/* Tombol Masuk untuk Desktop */}
+            {/* Tombol LanguageSelector telah dihapus */}
             <button 
               onClick={() => setIsModalOpen(true)}
-              className="rounded-md border border-primary/50 bg-primary/10 px-4 py-2 text-sm font-bold uppercase text-primary transition-colors hover:bg-primary/20"
+              className="rounded-md bg-primary px-4 py-2 text-sm font-bold uppercase text-background transition-colors hover:bg-cyan-300"
             >
               Masuk
             </button>
           </div>
 
-          {/* Tombol Hamburger untuk Mobile */}
           <div className="flex items-center md:hidden">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="rounded-md p-2 text-neutral-300 transition-colors hover:bg-white/10 hover:text-primary"
-              aria-label="Toggle menu"
-            >
+            {/* Tombol Hamburger untuk Mobile */}
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="rounded-md p-2 text-neutral-300 transition-colors hover:bg-white/10 hover:text-primary" aria-label="Toggle menu">
               {isMenuOpen ? <VscChromeClose size={24} /> : <VscMenu size={24} />}
             </button>
           </div>
         </div>
         
-        {/* Panel Menu Mobile */}
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
               className="absolute left-0 w-full border-t border-white/10 bg-background/95 p-4 md:hidden"
-              variants={menuVariants} initial="hidden" animate="visible" exit="hidden"
+              variants={menuVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
             >
               <nav>
                 <ul className="flex flex-col items-center space-y-4">
@@ -85,11 +76,10 @@ export const Header: React.FC = () => {
                       </Link>
                     </li>
                   ))}
-                  {/* Tombol Masuk untuk Mobile */}
                    <li className="w-full pt-4">
                       <button 
                         onClick={() => { setIsModalOpen(true); setIsMenuOpen(false); }}
-                        className="w-full rounded-md border border-primary/50 bg-primary/10 px-4 py-3 text-sm font-bold uppercase text-primary"
+                        className="w-full rounded-md bg-primary px-4 py-3 text-sm font-bold uppercase text-background transition-colors hover:bg-cyan-300"
                       >
                         Masuk / Daftar
                       </button>
@@ -99,9 +89,9 @@ export const Header: React.FC = () => {
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.header>
+      </header>
 
-      {/* Render Modal di sini */}
+      {/* Modal tetap ada dan berfungsi */}
       <AuthModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   );

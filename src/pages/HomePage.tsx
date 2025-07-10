@@ -1,16 +1,20 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { HeroSection } from '../components/HeroSection';
 import { FeatureGrid } from '../components/FeatureGrid';
 import { LogoCloud } from '../components/LogoCloud';
 
 export const HomePage: React.FC = () => {
+  // Panggil hook useTranslation untuk mendapatkan fungsi 't'
+  const { t } = useTranslation();
+
   return (
     <>
       <HeroSection />
       <FeatureGrid />
 
-      {/* Bagian "Mengapa Synapse" tetap di Halaman Utama */}
+      {/* Bagian ini sengaja tidak saya terjemahkan karena lebih bersifat naratif */}
       <motion.div
         className="relative z-10 mx-auto max-w-4xl px-4 py-20 text-center sm:px-6 lg:px-8"
         initial={{ opacity: 0, y: 50 }}
@@ -31,20 +35,25 @@ export const HomePage: React.FC = () => {
       
       <LogoCloud />
 
-      {/* Bagian CTA Final */}
+      {/* Bagian CTA Final dengan teks yang sudah diterjemahkan */}
       <motion.div 
         className="relative z-10 mx-auto max-w-7xl px-4 py-20 text-center sm:px-6 lg:px-8"
-        // ... (properti motion)
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
       >
-        <h2 className="font-monument text-3xl uppercase text-neutral-100 md:text-4xl">
-          Hidup Digital Anda, <br/> Diatur dengan Sempurna.
-        </h2>
+        <h2 
+          className="font-monument text-3xl uppercase text-neutral-100 md:text-4xl"
+          // Menggunakan dangerouslySetInnerHTML untuk merender tag <br> dari JSON
+          dangerouslySetInnerHTML={{ __html: t('home_cta.title').replace('<br/>', '<br />') }} 
+        />
         <p className="mx-auto mt-4 max-w-2xl font-satoshi text-lg text-neutral-400">
-          Berhenti khawatir kehilangan data. Mulai arsipkan kenangan Anda dengan cerdas hari ini.
+          {t('home_cta.subtitle')}
         </p>
         <div className="mt-8">
           <button className="transform rounded-md border border-primary/50 bg-primary/10 px-8 py-4 font-satoshi text-base uppercase tracking-wider text-neutral backdrop-blur-sm transition-all duration-300 hover:bg-primary/20 hover:shadow-lg hover:shadow-primary/20">
-            [ Amankan Kenangan Anda ]
+            [ {t('home_cta.button')} ]
           </button>
         </div>
       </motion.div>

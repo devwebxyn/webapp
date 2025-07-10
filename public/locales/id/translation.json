@@ -1,0 +1,33 @@
+{
+  "nav": {
+    "home": "Beranda",
+    "about_project": "Tentang Proyek",
+    "about_developer": "Tentang Developer",
+    "try_ai": "Coba AI Kami",
+    "login": "Masuk"
+  },
+  "hero": {
+    "title_part1": "Ruang Digital Anda.",
+    "title_part2": "Ditenagai oleh AI.",
+    "subtitle": "Amankan semua file, foto, dan arsip media sosial Anda di satu tempat. Biarkan AI cerdas kami mengaturnya untuk Anda.",
+    "cta_main": "Mulai Gratis",
+    "cta_secondary": "Pelajari Fitur"
+  },
+  "features": {
+    "title": "Semua Fitur yang Anda Butuhkan",
+    "subtitle": "Dirancang untuk keamanan, kecepatan, dan kemudahan.",
+    "storage_title": "Penyimpanan Terpadu",
+    "storage_desc": "Satu tempat aman untuk semua file, dokumen, foto, dan video penting Anda. Akses dari mana saja.",
+    "social_title": "Arsip Media Sosial",
+    "social_desc": "Hubungkan akun Anda untuk mengarsipkan postingan, foto, dan kenangan digital secara otomatis dan permanen.",
+    "ai_title": "Organisasi Cerdas AI",
+    "ai_desc": "AI kami secara otomatis memberi tag pada foto, meringkas dokumen, dan membuat koleksi cerdas.",
+    "security_title": "Privasi & Enkripsi",
+    "security_desc": "Dengan enkripsi end-to-end dan kebijakan tanpa-pengetahuan, data Anda hanya milik Anda seorang."
+  },
+  "home_cta": {
+    "title": "Hidup Digital Anda, Diatur dengan Sempurna.",
+    "subtitle": "Berhenti khawatir kehilangan data. Mulai arsipkan kenangan Anda dengan cerdas hari ini.",
+    "button": "Amankan Kenangan Anda"
+  }
+}
