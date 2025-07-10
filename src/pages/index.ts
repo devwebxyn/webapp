@@ -14,3 +14,4 @@ export * from './AccountSetupPage';
 export * from './ProfileSetupPage';
 export * from './DashboardPage';
 export * from './WelcomePage';
+export * from './VerifyNewEmailPage'; 

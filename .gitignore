@@ -27,4 +27,3 @@ dist-ssr
 .env.*
 # Ignore local environment files
 .env
-cloudnest-backend/.env
