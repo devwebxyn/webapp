@@ -15,3 +15,10 @@ export * from './ProfileSetupPage';
 export * from './DashboardPage';
 export * from './WelcomePage';
 export * from './VerifyNewEmailPage'; 
+export * from './StoragePage';
+export * from './SettingsPage';
+export * from './ProfilePage';
+export { default as SettingsSecurityPage } from './SettingsSecurityPage';
+export { default as DeviceSettingsPage } from './DeviceSettingsPage';
+export { default as IntegrationsPage } from './IntegrationsPage';
+

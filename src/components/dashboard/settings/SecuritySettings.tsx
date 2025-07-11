@@ -202,7 +202,7 @@ export const SecuritySettings: React.FC = () => {
     };
 
     // Fungsi untuk Jadikan Email Primer
-    const handleMakePrimary = async (emailToMakePrimary: string) => {
+    const handleMakePrimary = async (_emailToMakePrimary: string) => {
         toast.info(
             <div className="flex flex-col">
                 <p className="font-bold">Fitur 'Jadikan Primer'</p>

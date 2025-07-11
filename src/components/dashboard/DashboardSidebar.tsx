@@ -1,13 +1,15 @@
-// src/components/dashboard/DashboardSidebar.tsx
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
-import { VscAccount, VscDashboard, VscShield, VscVm } from 'react-icons/vsc';
+// Impor ikon baru untuk integrasi
+import { VscAccount, VscDashboard, VscShield, VscVm, VscPlug } from 'react-icons/vsc';
 
 const navLinks = [
   { to: '/dashboard', label: 'Dashboard', icon: <VscDashboard /> },
   { to: '/dashboard/profile', label: 'Profil Pengguna', icon: <VscAccount /> },
   { to: '/dashboard/security', label: 'Keamanan', icon: <VscShield /> },
+  // --- TAMBAHKAN BARIS INI ---
+  { to: '/dashboard/integrations', label: 'Brankas Fondasi', icon: <VscPlug /> },
   { to: '/dashboard/devices', label: 'Perangkat', icon: <VscVm /> },
 ];
 

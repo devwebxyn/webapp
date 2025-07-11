@@ -6,7 +6,7 @@ import { useAuth } from '../AuthContext';
 import { supabase } from '../../supabaseClient';
 import { toast } from 'react-toastify';
 import { VscKey, VscVerified, VscUnverified } from 'react-icons/vsc';
-import { FaGithub, FaGoogle } from 'react-icons/fa';
+import { FaGithub, FaGoogle } from 'react-icons/fa';;
 
 const SectionCard: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
     <motion.div 

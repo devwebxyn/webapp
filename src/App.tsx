@@ -13,7 +13,7 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import { PublicLayout } from './layouts/PublicLayout';
 import { DashboardLayout } from './layouts/DashboardLayout';
 
-// Pages (pastikan semua diimpor dari index.ts)
+// Pages (pastikan semua diimpor dari ./pages/index.ts)
 import {
   HomePage,
   AboutProjectPage,
@@ -32,12 +32,12 @@ import {
   AccountSetupPage,
   DashboardPage,
   VerifyNewEmailPage,
+  StoragePage, 
+  ProfilePage,
+  SettingsSecurityPage,
+  DeviceSettingsPage,
+  IntegrationsPage,
 } from './pages';
-
-// Import komponen spesifik untuk dashboard
-import { DashboardSecurityPage } from './components/dashboard/DashboardSecurityPage'; // Import DashboardSecurityPage
-import { ProfilePage } from './components/dashboard/ProfilePage'; // Import ProfilePage
-import { DeviceSettings } from './components/dashboard/settings/DeviceSettings'; // Import DeviceSettings
 
 function App() {
   const [session, setSession] = useState<Session | null>(null);
@@ -59,16 +59,21 @@ function App() {
   }, []);
 
   if (loading) {
-    return <div className="flex h-screen items-center justify-center bg-black text-white font-monument">Memuat...</div>;
+    return (
+      <div className="flex h-screen items-center justify-center bg-black text-white font-monument">
+        Memuat...
+      </div>
+    );
   }
 
   return (
     <div className="bg-background text-neutral-200">
       <Routes>
-        {/* Grup 1: Halaman publik */}
+        {/* --- Rute Publik --- */}
         <Route element={<PublicLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/about-project" element={<AboutProjectPage />} />
+          <Route path="/about-developer" element={<AboutDeveloperPage />} />
           <Route path="/status" element={<StatusPage />} />
           <Route path="/security" element={<SecurityPage />} />
           <Route path="/legal" element={<LegalPage />} />
@@ -76,25 +81,31 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/welcome" element={<WelcomePage />} />
           <Route path="/auth/email-verification" element={<EmailVerificationPage />} />
           <Route path="/verify-email" element={<VerifyNewEmailPage />} />
-          <Route path="/about-developer" element={<AboutDeveloperPage />} />
+          <Route path="/welcome" element={<WelcomePage />} />
         </Route>
 
-        {/* Grup 2: Halaman yang membutuhkan autentikasi (di dalam DashboardLayout) */}
-        <Route element={<ProtectedRoute session={session}><DashboardLayout /></ProtectedRoute>}>
+        {/* --- Rute Terproteksi (Dashboard) --- */}
+        <Route
+          element={
+            <ProtectedRoute session={session}>
+              <DashboardLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/setup-account" element={<AccountSetupPage />} />
           <Route path="/profile-setup" element={<ProfileSetupPage />} />
           <Route path="/update-password" element={<UpdatePasswordPage />} />
-          
-          {/* --- Rute DASHBOARD BERSARANG yang baru ditambahkan --- */}
-          {/* Perhatikan Outlet di DashboardLayout.tsx akan merender komponen-komponen ini */}
-          <Route path="/dashboard/profile" element={<ProfilePage />} />
-          <Route path="/dashboard/security" element={<DashboardSecurityPage />} /> {/* Menautkan ke DashboardSecurityPage */}
-          <Route path="/dashboard/devices" element={<DeviceSettings />} />
-          {/* --- AKHIR Rute DASHBOARD BERSARANG --- */}
+          <Route path="/storage/private" element={<StoragePage />} />
+
+          {/* --- RUTE UTAMA UNTUK HALAMAN PENGATURAN --- */}
+          <Route path="/dashboard/security" element={<SettingsSecurityPage />} />
+          <Route path="/dashboard/profile" element={<ProfilePage />} /> 
+          <Route path="/dashboard/devices" element={<DeviceSettingsPage />} />
+          <Route path="/dashboard/integrations" element={<IntegrationsPage />} />
+
         </Route>
       </Routes>
 

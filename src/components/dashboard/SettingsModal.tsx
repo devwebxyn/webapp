@@ -1,24 +1,29 @@
-// src/components/dashboard/SettingsModal.tsx
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { VscChromeClose, VscAccount, VscShield, VscVm } from 'react-icons/vsc';
+// Impor ikon baru
+import { VscChromeClose, VscAccount, VscShield, VscVm, VscPlug } from 'react-icons/vsc'; 
 import { ProfileSettings } from './settings/ProfileSettings';
 import { SecuritySettings } from './settings/SecuritySettings';
 import { DeviceSettings } from './settings/DeviceSettings';
+// Impor halaman integrasi yang sudah kita buat
+import { IntegrationsPage } from './settings/IntegrationsPage'; 
 
 interface SettingsModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-type ActiveTab = 'profile' | 'security' | 'devices';
+// Tambahkan 'integrations' ke dalam tipe ActiveTab
+type ActiveTab = 'profile' | 'security' | 'devices' | 'integrations';
 
 export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
   const [activeTab, setActiveTab] = useState<ActiveTab>('profile');
 
+  // Tambahkan item baru untuk Brankas Fondasi
   const sidebarItems = [
     { id: 'profile', label: 'Profil Pengguna', icon: <VscAccount /> },
     { id: 'security', label: 'Keamanan', icon: <VscShield /> },
+    { id: 'integrations', label: 'Brankas Fondasi', icon: <VscPlug /> },
     { id: 'devices', label: 'Perangkat', icon: <VscVm /> },
   ];
 
@@ -73,6 +78,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
               <main className="w-3/4 overflow-y-auto p-8">
                 {activeTab === 'profile' && <ProfileSettings />}
                 {activeTab === 'security' && <SecuritySettings />}
+                {/* TAMBAHKAN KONDISI UNTUK MERENDER HALAMAN INTEGRASI */}
+                {activeTab === 'integrations' && <IntegrationsPage />}
                 {activeTab === 'devices' && <DeviceSettings />}
               </main>
             </div>
