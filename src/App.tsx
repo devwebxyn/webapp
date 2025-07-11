@@ -13,7 +13,7 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import { PublicLayout } from './layouts/PublicLayout';
 import { DashboardLayout } from './layouts/DashboardLayout';
 
-// Pages
+// Pages (pastikan semua diimpor dari index.ts)
 import {
   HomePage,
   AboutProjectPage,
@@ -31,8 +31,13 @@ import {
   ProfileSetupPage,
   AccountSetupPage,
   DashboardPage,
-  VerifyNewEmailPage, // <-- halaman baru untuk verifikasi email tambahan
+  VerifyNewEmailPage,
 } from './pages';
+
+// Import komponen spesifik untuk dashboard
+import { DashboardSecurityPage } from './components/dashboard/DashboardSecurityPage'; // Import DashboardSecurityPage
+import { ProfilePage } from './components/dashboard/ProfilePage'; // Import ProfilePage
+import { DeviceSettings } from './components/dashboard/settings/DeviceSettings'; // Import DeviceSettings
 
 function App() {
   const [session, setSession] = useState<Session | null>(null);
@@ -73,18 +78,23 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/welcome" element={<WelcomePage />} />
           <Route path="/auth/email-verification" element={<EmailVerificationPage />} />
-          
-          {/* Rute tambahan untuk verifikasi email baru */}
           <Route path="/verify-email" element={<VerifyNewEmailPage />} />
+          <Route path="/about-developer" element={<AboutDeveloperPage />} />
         </Route>
 
-        {/* Grup 2: Halaman yang membutuhkan autentikasi */}
+        {/* Grup 2: Halaman yang membutuhkan autentikasi (di dalam DashboardLayout) */}
         <Route element={<ProtectedRoute session={session}><DashboardLayout /></ProtectedRoute>}>
           <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/about-developer" element={<AboutDeveloperPage />} />
           <Route path="/setup-account" element={<AccountSetupPage />} />
           <Route path="/profile-setup" element={<ProfileSetupPage />} />
           <Route path="/update-password" element={<UpdatePasswordPage />} />
+          
+          {/* --- Rute DASHBOARD BERSARANG yang baru ditambahkan --- */}
+          {/* Perhatikan Outlet di DashboardLayout.tsx akan merender komponen-komponen ini */}
+          <Route path="/dashboard/profile" element={<ProfilePage />} />
+          <Route path="/dashboard/security" element={<DashboardSecurityPage />} /> {/* Menautkan ke DashboardSecurityPage */}
+          <Route path="/dashboard/devices" element={<DeviceSettings />} />
+          {/* --- AKHIR Rute DASHBOARD BERSARANG --- */}
         </Route>
       </Routes>
 

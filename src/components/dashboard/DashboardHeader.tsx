@@ -40,6 +40,9 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({ user, onSettin
         <nav className="flex items-center gap-6">
           <Link to="/dashboard" className="font-monument text-xl font-bold text-white">CloudNest</Link>
           <div className="hidden items-center gap-6 md:flex">
+            <Link to="/dashboard" className="text-sm font-semibold tracking-wide text-neutral-300 transition-colors hover:text-primary">
+            Beranda
+            </Link>
             <Link to="/storage/private" className="text-sm font-semibold tracking-wide text-neutral-300 transition-colors hover:text-primary">
               Private Storage
             </Link>
