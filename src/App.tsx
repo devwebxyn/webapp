@@ -1,9 +1,8 @@
-// src/App.tsx
-
 import { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 import { supabase } from './supabaseClient';
 import { type Session } from '@supabase/supabase-js';
 
@@ -12,8 +11,9 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 // Layouts
 import { PublicLayout } from './layouts/PublicLayout';
 import { DashboardLayout } from './layouts/DashboardLayout';
+import { StorageLayout } from './layouts/StorageLayout'; // Tambahan layout baru
 
-// Pages (pastikan semua diimpor dari ./pages/index.ts)
+// Pages (dari ./pages/index.ts)
 import {
   HomePage,
   AboutProjectPage,
@@ -32,12 +32,14 @@ import {
   AccountSetupPage,
   DashboardPage,
   VerifyNewEmailPage,
-  StoragePage, 
+  StoragePage,
   ProfilePage,
   SettingsSecurityPage,
   DeviceSettingsPage,
   IntegrationsPage,
 } from './pages';
+
+import { OverviewPage } from './components/dashboard/storage/OverviewPage';
 
 function App() {
   const [session, setSession] = useState<Session | null>(null);
@@ -67,7 +69,7 @@ function App() {
   }
 
   return (
-    <div className="bg-background text-neutral-200">
+    <div className="bg-background text-neutral-200 min-h-screen">
       <Routes>
         {/* --- Rute Publik --- */}
         <Route element={<PublicLayout />}>
@@ -86,7 +88,7 @@ function App() {
           <Route path="/welcome" element={<WelcomePage />} />
         </Route>
 
-        {/* --- Rute Terproteksi (Dashboard) --- */}
+        {/* --- Rute Terproteksi Dashboard --- */}
         <Route
           element={
             <ProtectedRoute session={session}>
@@ -98,14 +100,23 @@ function App() {
           <Route path="/setup-account" element={<AccountSetupPage />} />
           <Route path="/profile-setup" element={<ProfileSetupPage />} />
           <Route path="/update-password" element={<UpdatePasswordPage />} />
-          <Route path="/storage/private" element={<StoragePage />} />
-
-          {/* --- RUTE UTAMA UNTUK HALAMAN PENGATURAN --- */}
+          <Route path="/dashboard/profile" element={<ProfilePage />} />
           <Route path="/dashboard/security" element={<SettingsSecurityPage />} />
-          <Route path="/dashboard/profile" element={<ProfilePage />} /> 
           <Route path="/dashboard/devices" element={<DeviceSettingsPage />} />
           <Route path="/dashboard/integrations" element={<IntegrationsPage />} />
+        </Route>
 
+        {/* --- Rute Private Penyimpanan (Sidebar Khusus) --- */}
+        <Route
+          element={
+            <ProtectedRoute session={session}>
+              <StorageLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="/storage/private" element={<StoragePage />} />
+          <Route path="/storage/private/overview" element={<OverviewPage />} />
+          {/* Kamu bisa tambahkan: <Route path="trash" ... /> <Route path="recents" ... /> */}
         </Route>
       </Routes>
 
