@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../AuthContext';
 import { supabase } from '../../../supabaseClient';
-import { VscCheck, VscKey, VscMail, VscLoading, VscVerified, VscUnverified } from 'react-icons/vsc';
+import { VscKey, VscMail, VscLoading, VscVerified, VscUnverified } from 'react-icons/vsc';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
@@ -185,7 +185,7 @@ export const SecuritySettings: React.FC = () => {
         
         setIsAddingEmail(true);
         try {
-            const { data, error } = await supabase.functions.invoke('add-email-request', {
+            const { error } = await supabase.functions.invoke('add-email-request', {
                 body: { new_email: newEmail },
             });
 
