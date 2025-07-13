@@ -37,6 +37,10 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({ user }) => {
   }, []);
 
   const handleLogout = async () => {
+    
+
+
+
     if (window.google) {
       const token = window.gapi.client.getToken();
       if (token) {

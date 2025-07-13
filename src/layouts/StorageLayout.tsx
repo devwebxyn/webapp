@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { DashboardHeader } from '../components/dashboard/DashboardHeader';
-import { StorageSidebar } from '../components/dashboard/StorageSidebar';
+import StorageSidebar from '../components/dashboard/StorageSidebar';
 import { useAuth } from '../components/AuthContext';
 
 export const StorageLayout: React.FC = () => {
