@@ -16,14 +16,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const getSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+    // Cukup periksa sesi awal dan dengarkan perubahan
+    supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
-    };
-
-    getSession();
+    });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
@@ -33,12 +31,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return () => subscription.unsubscribe();
   }, []);
 
-  const value = {
-    session,
-    user,
-    loading,
-  };
+  const value = { session, user, loading };
 
+  // Jangan blok render dengan `!loading`
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 

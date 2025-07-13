@@ -8,6 +8,7 @@ interface ConfirmDeleteModalProps {
   onConfirm: () => void;
   itemName: string;
   isLoading: boolean;
+  isPermanent: boolean; // Properti baru untuk membedakan jenis hapus
 }
 
 export const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
@@ -16,6 +17,7 @@ export const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
   onConfirm,
   itemName,
   isLoading,
+  isPermanent, // Menggunakan properti baru
 }) => {
   if (!isOpen) return null;
 
@@ -37,9 +39,12 @@ export const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-500/20">
             <VscTrash className="h-6 w-6 text-red-500" />
           </div>
-          <h3 className="mt-4 text-lg font-bold text-white">Hapus Item Ini?</h3>
+          <h3 className="mt-4 text-lg font-bold text-white">
+            {isPermanent ? 'Hapus Permanen?' : 'Pindahkan ke Sampah?'}
+          </h3>
           <p className="mt-2 text-sm text-neutral-400">
-            Apakah Anda yakin ingin menghapus <strong className="text-white break-all">"{itemName}"</strong>? Tindakan ini akan memindahkannya ke sampah.
+            Apakah Anda yakin ingin menghapus <strong className="text-white break-all">"{itemName}"</strong>? 
+            {isPermanent && <span className="font-bold text-red-400"> Tindakan ini tidak dapat diurungkan.</span>}
           </p>
           <div className="flex justify-center gap-4 mt-6">
             <button

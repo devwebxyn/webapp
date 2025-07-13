@@ -75,13 +75,22 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({ user }) => {
               Beranda
             </Link>
             <Link
-              to="/storage/private"
+              to="/storage/private/overview"
               className="text-sm font-semibold tracking-wide text-neutral-300 transition-colors hover:text-primary"
             >
               My Google Drive
             </Link>
+             <Link
+              to="/dashboard/share"
+              className="text-sm font-semibold tracking-wide text-neutral-300 transition-colors hover:text-primary"
+            >
+              Shared
+            </Link>
+           
           </div>
         </nav>
+
+        
 
         {/* Bagian Kanan */}
         <div className="flex items-center gap-4">

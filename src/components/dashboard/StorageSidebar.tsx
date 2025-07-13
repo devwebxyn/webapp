@@ -1,12 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useGoogleDrive } from '../../hooks/useGoogleDrive';
-import { VscCheck, VscFile, VscHistory, VscTrash } from 'react-icons/vsc';
+import { VscCheck, VscFile, VscMail, VscTrash } from 'react-icons/vsc';
 
 const navItems = [
   { to: '/storage/private/overview', label: 'Overview', icon: <VscCheck /> },
   { to: '/storage/private', label: 'My Files', icon: <VscFile /> },
-  { to: '/storage/private/recents', label: 'Recents', icon: <VscHistory /> },
+  { to: '/storage/private/inbox', label: 'Inbox', icon: <VscMail /> },
   { to: '/storage/private/trash', label: 'Trash', icon: <VscTrash /> },
 ];
 
