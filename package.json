@@ -17,6 +17,7 @@
     "@supabase/supabase-js": "^2.50.3",
     "@types/gapi.auth2": "^0.0.61",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5", 
     "express": "^5.1.0",
     "framer-motion": "^12.23.0",
     "gapi-script": "^1.2.0",

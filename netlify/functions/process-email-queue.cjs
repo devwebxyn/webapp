@@ -1,13 +1,19 @@
-// netlify/functions/process-email-queue.js
+// netlify/functions/process-email-queue.cjs
+
+require('dotenv').config(); // <-- TAMBAHKAN BARIS INI DI PALING ATAS
 
 const { createClient } = require('@supabase/supabase-js');
 const nodemailer = require('nodemailer');
 
-// Pastikan semua variabel lingkungan diatur di Netlify UI
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const GMAIL_USER = process.env.GMAIL_USER;
 const GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD;
+
+// Cek ulang untuk memastikan variabel ada, ini akan memberikan log yang lebih jelas jika gagal
+if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+  throw new Error("Supabase environment variables are missing!");
+}
 
 const supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 const transporter = nodemailer.createTransport({
@@ -17,16 +23,15 @@ const transporter = nodemailer.createTransport({
   auth: { user: GMAIL_USER, pass: GMAIL_APP_PASSWORD },
 });
 
-// Handler yang akan dipanggil oleh Netlify
 exports.handler = async function(event, context) {
   console.log(`[${new Date().toISOString()}] Memproses antrean email...`);
-
+  
   try {
     const { data: jobs, error } = await supabaseAdmin
       .from('email_queue')
       .select('*')
       .eq('status', 'pending')
-      .limit(5); // Proses hingga 5 email per panggilan
+      .limit(5);
 
     if (error) throw error;
 
