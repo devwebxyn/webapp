@@ -1,28 +1,22 @@
 # netlify.toml
 
 [build]
-  # Perintah untuk build frontend Anda (sudah benar)
   command = "npm run build"
-  # Folder output dari build Vite (sudah benar)
   publish = "dist"
-  # Direktori tempat fungsi-fungsi serverless kita berada
   functions = "netlify/functions"
 
-# Redirect untuk Single Page Application (SPA) dan API
 [[redirects]]
-  # Arahkan semua request ke /api/* ke fungsi 'api' kita
+  # Arahkan ke fungsi api.cjs yang baru
   from = "/api/*"
   to = "/.netlify/functions/api/:splat"
   status = 200
 
 [[redirects]]
-  # Aturan fallback untuk SPA React Router
   from = "/*"
   to = "/index.html"
   status = 200
 
-# Konfigurasi untuk scheduled function
 [functions]
-  # Jadwalkan fungsi 'process-email-queue' untuk berjalan setiap 15 menit
+  # Jadwalkan fungsi process-email-queue.cjs yang baru
   [functions."process-email-queue"]
     schedule = "*/15 * * * *"
