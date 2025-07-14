@@ -1,4 +1,4 @@
-// netlify/functions/api.js
+// netlify/functions/api.cjs
 
 const express = require('express');
 const cors = require('cors');
@@ -9,21 +9,22 @@ const serverless = require('serverless-http');
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 const app = express();
-const router = express.Router();
 
+// Middleware harus didefinisikan SEBELUM route
 app.use(cors());
 app.use(express.json());
 
-router.post('/chat', async (req, res) => {
-  const { prompt } = req.body;
-  if (!prompt) {
-    return res.status(400).json({ error: 'Prompt is required' });
+// Langsung definisikan route pada 'app'
+app.post('/api/chat', async (req, res) => {
+  // Cek jika req.body ada isinya
+  if (!req.body || !req.body.prompt) {
+    return res.status(400).json({ error: 'Prompt is required in the request body.' });
   }
+  
+  const { prompt } = req.body;
 
   console.log(`Menerima prompt untuk Groq: "${prompt}"`);
 
-  // Streaming tidak didukung secara langsung di serverless function standar.
-  // Kita akan mengirim respon lengkap setelah selesai.
   try {
     const chatCompletion = await groq.chat.completions.create({
       messages: [
@@ -39,15 +40,13 @@ router.post('/chat', async (req, res) => {
       model: 'llama3-8b-8192', 
     });
 
-    res.json(chatCompletion.choices[0]);
+    res.status(200).json(chatCompletion.choices[0]);
 
   } catch (error) {
     console.error('Groq API Error:', error);
     res.status(500).json({ error: 'Terjadi kesalahan pada Groq API.' });
   }
 });
-
-app.use('/api', router); // Menggunakan prefix /api
 
 // Ekspor handler untuk Netlify
 module.exports.handler = serverless(app);
