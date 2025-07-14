@@ -42,36 +42,28 @@ export const TryAIPage: React.FC = () => {
     setInput('');
     setIsLoading(true);
 
-    // Siapkan placeholder untuk pesan AI
     const aiMessageId = Date.now() + 1;
     setMessages(prev => [...prev, { id: aiMessageId, role: 'assistant', content: '' }]);
 
     try {
-      // Mengirim prompt ke fungsi serverless Netlify
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: currentInput })
       });
 
-      // --- PERBAIKAN UTAMA ADA DI SINI ---
-      // Logika diubah dari streaming menjadi menerima satu JSON lengkap.
-
+      // --- PERBAIKAN LOGIKA FETCH ---
+      // Logika diubah untuk menangani satu respons JSON, bukan streaming.
       if (!response.ok) {
-        // Coba baca error sebagai JSON
         const errorData = await response.json().catch(() => ({
-          error: 'Gagal mendapatkan respon dari server.'
+          error: `Terjadi kesalahan pada server (Status: ${response.status})`
         }));
-        throw new Error(errorData.error || `Terjadi kesalahan: ${response.statusText}`);
+        throw new Error(errorData.error);
       }
 
-      // Baca seluruh body sebagai JSON
       const data = await response.json();
+      const aiResponseContent = data?.message?.content || 'Maaf, saya tidak menerima respons yang valid dari AI.';
       
-      // Ekstrak konten dari respons. Berdasarkan backend kita, path-nya adalah data.message.content
-      const aiResponseContent = data?.message?.content || 'Maaf, saya tidak menerima respons yang valid.';
-      
-      // Update pesan AI dengan konten lengkap
       setMessages(prev =>
         prev.map(msg =>
           msg.id === aiMessageId
@@ -81,7 +73,6 @@ export const TryAIPage: React.FC = () => {
       );
 
     } catch (error: any) {
-      // Tangani error jika fetch gagal atau parsing JSON gagal
       setMessages(prev =>
         prev.map(msg =>
           msg.id === aiMessageId
