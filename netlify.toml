@@ -1,13 +1,28 @@
-[build]
-  command = "npm run build"
-  publish = "dist"
+# netlify.toml
 
-[functions]
-  # Diubah sesuai nama folder Anda
-  directory = "cloudnest-backend" 
-  directory = "email-sender-service"
+[build]
+  # Perintah untuk build frontend Anda (sudah benar)
+  command = "npm run build"
+  # Folder output dari build Vite (sudah benar)
+  publish = "dist"
+  # Direktori tempat fungsi-fungsi serverless kita berada
+  functions = "netlify/functions"
+
+# Redirect untuk Single Page Application (SPA) dan API
+[[redirects]]
+  # Arahkan semua request ke /api/* ke fungsi 'api' kita
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
 
 [[redirects]]
+  # Aturan fallback untuk SPA React Router
   from = "/*"
   to = "/index.html"
   status = 200
+
+# Konfigurasi untuk scheduled function
+[functions]
+  # Jadwalkan fungsi 'process-email-queue' untuk berjalan setiap 15 menit
+  [functions."process-email-queue"]
+    schedule = "*/15 * * * *"

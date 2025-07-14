@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "postinstall": "cd cloudnest-backend && npm install && cd ../email-sender-service && npm install && cd ..",
     "lint": "eslint .",
     "preview": "vite preview"
   },

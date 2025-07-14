@@ -21,4 +21,5 @@ export * from './ProfilePage';
 export { default as SettingsSecurityPage } from './SettingsSecurityPage';
 export { default as DeviceSettingsPage } from './DeviceSettingsPage';
 export { default as IntegrationsPage } from './IntegrationsPage';
+export { default as FeaturesPage } from './FeaturesPage'; 
 

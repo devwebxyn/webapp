@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { HeroSection } from '../components/HeroSection';
 import { FeatureGrid } from '../components/FeatureGrid';
 import { LogoCloud } from '../components/LogoCloud';
+import { Link } from 'react-router-dom';
 
 export const HomePage: React.FC = () => {
   // Panggil hook useTranslation untuk mendapatkan fungsi 't'
@@ -52,9 +53,9 @@ export const HomePage: React.FC = () => {
           {t('home_cta.subtitle')}
         </p>
         <div className="mt-8">
-          <button className="transform rounded-md border border-primary/50 bg-primary/10 px-8 py-4 font-satoshi text-base uppercase tracking-wider text-neutral backdrop-blur-sm transition-all duration-300 hover:bg-primary/20 hover:shadow-lg hover:shadow-primary/20">
+          <Link to="/register" className="transform rounded-md border border-primary/50 bg-primary/10 px-8 py-4 font-satoshi text-base uppercase tracking-wider text-neutral backdrop-blur-sm transition-all duration-300 hover:bg-primary/20 hover:shadow-lg hover:shadow-primary/20">
             [ {t('home_cta.button')} ]
-          </button>
+          </Link>
         </div>
       </motion.div>
     </>

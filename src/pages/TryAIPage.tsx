@@ -1,3 +1,5 @@
+// src/pages/TryAIPage.tsx
+
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { VscSend, VscSparkle, VscShield, VscBeaker, VscPerson, VscScreenFull, VscChromeClose } from 'react-icons/vsc';
@@ -40,43 +42,46 @@ export const TryAIPage: React.FC = () => {
     setInput('');
     setIsLoading(true);
 
-    let aiResponseContent = '';
+    // Siapkan placeholder untuk pesan AI
     const aiMessageId = Date.now() + 1;
     setMessages(prev => [...prev, { id: aiMessageId, role: 'assistant', content: '' }]);
 
     try {
-      // --- PERBAIKAN DI SINI: Hapus 'model' dari body permintaan ---
-      const response = await fetch('http://localhost:8000/api/chat', {
+      // Mengirim prompt ke fungsi serverless Netlify
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: currentInput }) // Hanya kirim prompt
+        body: JSON.stringify({ prompt: currentInput })
       });
 
-      if (!response.ok || !response.body) {
+      // --- PERBAIKAN UTAMA ADA DI SINI ---
+      // Logika diubah dari streaming menjadi menerima satu JSON lengkap.
+
+      if (!response.ok) {
+        // Coba baca error sebagai JSON
         const errorData = await response.json().catch(() => ({
           error: 'Gagal mendapatkan respon dari server.'
         }));
-        throw new Error(errorData.error);
+        throw new Error(errorData.error || `Terjadi kesalahan: ${response.statusText}`);
       }
 
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
+      // Baca seluruh body sebagai JSON
+      const data = await response.json();
+      
+      // Ekstrak konten dari respons. Berdasarkan backend kita, path-nya adalah data.message.content
+      const aiResponseContent = data?.message?.content || 'Maaf, saya tidak menerima respons yang valid.';
+      
+      // Update pesan AI dengan konten lengkap
+      setMessages(prev =>
+        prev.map(msg =>
+          msg.id === aiMessageId
+            ? { ...msg, content: aiResponseContent }
+            : msg
+        )
+      );
 
-      while (true) {
-        const { value, done } = await reader.read();
-        if (done) break;
-        const chunk = decoder.decode(value, { stream: true });
-
-        aiResponseContent += chunk;
-        setMessages(prev =>
-          prev.map(msg =>
-            msg.id === aiMessageId
-              ? { ...msg, content: aiResponseContent }
-              : msg
-          )
-        );
-      }
     } catch (error: any) {
+      // Tangani error jika fetch gagal atau parsing JSON gagal
       setMessages(prev =>
         prev.map(msg =>
           msg.id === aiMessageId

@@ -41,6 +41,7 @@ import {
   SettingsSecurityPage,
   DeviceSettingsPage,
   IntegrationsPage,
+  FeaturesPage,
 } from './pages';
 
 import { OverviewPage } from './components/dashboard/storage/OverviewPage';
@@ -91,6 +92,7 @@ function App() {
             <Route path="/auth/email-verification" element={<EmailVerificationPage />} />
             <Route path="/verify-email" element={<VerifyNewEmailPage />} />
             <Route path="/welcome" element={<WelcomePage />} />
+            <Route path="/features" element={<FeaturesPage />} />
           </Route>
 
           {/* --- Rute Terproteksi Dashboard --- */}
