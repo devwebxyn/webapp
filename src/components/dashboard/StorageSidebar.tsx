@@ -1,19 +1,24 @@
-import React from 'react'; // Menghapus useState yang tidak terpakai
+// src/components/dashboard/StorageSidebar.tsx
+
+import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { useGoogleDrive } from '../../hooks/useGoogleDrive';// Perbaikan: Menggunakan default import
+import { useGoogleDrive } from '../../hooks/useGoogleDrive';
 import {
     VscHome,
     VscCloud,
     VscTrash,
     VscHistory,
-    VscStarFull as VscStar, // Perbaikan: Mengimpor VscStarFull dan menamainya VscStar
+    VscStarFull as VscStar,
     VscServerProcess
 } from 'react-icons/vsc';
 
-const StorageSidebar: React.FC = () => {
+interface StorageSidebarProps {
+  isOpen: boolean;
+}
+
+const StorageSidebar: React.FC<StorageSidebarProps> = ({ isOpen }) => {
     const { storageQuota, isLoading } = useGoogleDrive();
 
-    // Fungsi untuk memformat byte
     const formatBytes = (bytes: number, decimals = 2) => {
         if (!+bytes) return '0 Bytes';
         const k = 1024;
@@ -42,34 +47,21 @@ const StorageSidebar: React.FC = () => {
         }`;
 
     return (
-        <aside className="bg-zinc-900 text-neutral-300 w-64 p-4 flex flex-col border-r border-white/10">
-            <nav className="flex-grow">
+        <aside 
+            className={`
+                fixed top-0 left-0 h-full bg-zinc-900 text-neutral-300 w-64 p-4 flex flex-col border-r border-white/10
+                transform transition-transform duration-300 ease-in-out z-50
+                md:relative md:transform-none md:z-auto
+                ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+            `}
+        >
+            <nav className="flex-grow overflow-y-auto">
                 <ul className="space-y-1">
-                    <li>
-                        <NavLink to="/storage/private/overview" className={navLinkClass}>
-                            <VscHome /> Ringkasan
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/storage/private" className={navLinkClass}>
-                            <VscCloud /> File Saya
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/dashboard/share" className={navLinkClass}>
-                            <VscStar /> Dibagikan
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/storage/private/inbox" className={navLinkClass}>
-                            <VscHistory /> Inbox
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/storage/private/trash" className={navLinkClass}>
-                            <VscTrash /> Sampah
-                        </NavLink>
-                    </li>
+                    <li><NavLink to="/storage/private/overview" className={navLinkClass}><VscHome /> Ringkasan</NavLink></li>
+                    <li><NavLink to="/storage/private" className={navLinkClass}><VscCloud /> File Saya</NavLink></li>
+                    <li><NavLink to="/dashboard/share" className={navLinkClass}><VscStar /> Dibagikan</NavLink></li>
+                    <li><NavLink to="/storage/private/inbox" className={navLinkClass}><VscHistory /> Inbox</NavLink></li>
+                    <li><NavLink to="/storage/private/trash" className={navLinkClass}><VscTrash /> Sampah</NavLink></li>
                 </ul>
             </nav>
 
@@ -82,18 +74,11 @@ const StorageSidebar: React.FC = () => {
                     </div>
                 ) : storageQuota ? (
                     <div className="text-sm">
-                        <p className="font-semibold text-white mb-2 flex items-center gap-2">
-                            <VscServerProcess /> Kuota Penyimpanan
-                        </p>
+                        <p className="font-semibold text-white mb-2 flex items-center gap-2"><VscServerProcess /> Kuota Penyimpanan</p>
                         <div className="w-full bg-white/10 rounded-full h-2.5 mb-2 overflow-hidden">
-                           <div
-                             className={`${getProgressBarColor()} h-2.5 rounded-full transition-all duration-500`}
-                             style={{ width: `${usagePercentage}%` }}
-                           ></div>
+                           <div className={`${getProgressBarColor()} h-2.5 rounded-full transition-all duration-500`} style={{ width: `${usagePercentage}%` }}></div>
                         </div>
-                        <p className="text-neutral-400">
-                           {usageFormatted} dari {limitFormatted} digunakan
-                        </p>
+                        <p className="text-neutral-400">{usageFormatted} dari {limitFormatted} digunakan</p>
                     </div>
                 ) : (
                     <p className="text-sm text-neutral-500">Gagal memuat kuota.</p>
